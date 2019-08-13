@@ -67,7 +67,8 @@ object Period {
 
   /**
     * Converts a period and its time component to a string. If the time component is greater than the
-    * period's upperbound then an overtime component is added to the string
+    * period's upperbound then an overtime component is added to the string.
+    * Note that the fullTime period always has the overtime component.
     *
     * @param per
     * @return
