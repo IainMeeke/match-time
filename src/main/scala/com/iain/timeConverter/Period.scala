@@ -7,23 +7,23 @@ sealed abstract class Period {
 }
 
 case class preMatch(time: Duration) extends Period {
-  val upperBound = Duration(0, 0)
+  val upperBound = Duration(0, 0, 0)
 }
 
 case class firstHalf(time: Duration) extends Period {
-  val upperBound = Duration(45, 0)
+  val upperBound = Duration(45, 0, 0)
 }
 
 case class halfTime(time: Duration) extends Period {
-  val upperBound = Duration(45, 0)
+  val upperBound = Duration(45, 0, 0)
 }
 
 case class secondHalf(time: Duration) extends Period {
-  val upperBound = Duration(90, 0)
+  val upperBound = Duration(90, 0, 0)
 }
 
 case class fullTime(time: Duration) extends Period {
-  val upperBound = Duration(90, 0)
+  val upperBound = Duration(90, 0, 0)
 }
 
 /**
@@ -74,16 +74,19 @@ object Period {
     * @param per
     * @return
     */
-  def periodToString(period: Period): String = period match {
-    case per: fullTime  => periodToStringWithOvertime(per)  //full time always displays the overtime period as per the design doc
-    case per: Period =>
-      if (per.time > per.upperBound) periodToStringWithOvertime(per) //if there is overtime
-      else s"${per.time.toString()} - ${periodToLongForm(per)}"
-  }
+  def periodToString(period: Period): String =  {
 
-  def periodToStringWithOvertime(per: Period): String = {
-    val overTime = Duration(per.time.minutes - per.upperBound.minutes, per.time.seconds - per.upperBound.seconds)
-    s"${per.upperBound.toString()} +${overTime.toString()} - ${periodToLongForm(per)}"
-  }
+    def periodToStringWithOvertime(per: Period): String = {
+      val roundedDur = Duration.roundDuration(per.time)
+      val overTime = Duration(roundedDur.minutes - per.upperBound.minutes, roundedDur.seconds - per.upperBound.seconds, 0)
+      s"${Duration.durationToString(per.upperBound)} +${Duration.durationToString(overTime)} - ${periodToLongForm(per)}"
+    }
 
+    period match {
+      case per: fullTime  => periodToStringWithOvertime(per)  //full time always displays the overtime period as per the design doc
+      case per: Period =>
+        if (per.time > per.upperBound) periodToStringWithOvertime(per) //if there is overtime
+        else s"${Duration.durationToString(per.time)} - ${periodToLongForm(per)}"
+    }
+  }
 }

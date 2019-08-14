@@ -14,7 +14,7 @@ class TimeConverterTest extends FunSuite {
     test("[PM] 0:00.000", "00:00 - PRE_MATCH")
     test("[H1] 0:15.025", "00:15 - FIRST_HALF")
     test("[H1] 3:07.513", "03:08 - FIRST_HALF")
-//    test("[H1] 45:00.001", "45:00 +00:00 - FIRST_HALF")
+    test("[H1] 45:00.001", "45:00 +00:00 - FIRST_HALF")
     test("[H1] 46:15.752", "45:00 +01:16 - FIRST_HALF")
     test("[HT] 45:00.000", "45:00 - HALF_TIME")
     test("[H2] 45:00.500", "45:01 - SECOND_HALF")
@@ -27,7 +27,7 @@ class TimeConverterTest extends FunSuite {
   }
 
   test("validate input returns a right(period) for valid input") {
-    val expected = Right(fullTime(Duration(90,0)))
+    val expected = Right(fullTime(Duration(90,0,0)))
     val actual = TimeConverter.validateAndParse(s"[FT] 90:00.000")
     assert(actual === expected)
   }
