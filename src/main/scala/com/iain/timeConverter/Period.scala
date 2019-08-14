@@ -68,15 +68,16 @@ object Period {
   /**
     * Converts a period and its time component to a string. If the time component is greater than the
     * period's upperbound then an overtime component is added to the string.
+    *
     * Note that the fullTime period always has the overtime component.
     *
     * @param per
     * @return
     */
   def periodToString(period: Period): String = period match {
-    case per: fullTime  => periodToStringWithOvertime(per)
+    case per: fullTime  => periodToStringWithOvertime(per)  //full time always displays the overtime period as per the design doc
     case per: Period =>
-      if (per.time > per.upperBound) periodToStringWithOvertime(per)
+      if (per.time > per.upperBound) periodToStringWithOvertime(per) //if there is overtime
       else s"${per.time.toString()} - ${periodToLongForm(per)}"
   }
 

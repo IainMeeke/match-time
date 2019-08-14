@@ -28,15 +28,15 @@ class TimeConverterTest extends FunSuite {
 
   test("validate input returns a right(period) for valid input") {
     val expected = Right(fullTime(Duration(90,0)))
-    val actual = TimeConverter.validateInput(s"[FT] 90:00.000")
+    val actual = TimeConverter.validateAndParse(s"[FT] 90:00.000")
     assert(actual === expected)
   }
 
   test("validate input returns a left for invalid input") {
-    assert(TimeConverter.validateInput(s"90:00").isLeft)
-    assert(TimeConverter.validateInput(s"[H3] 90:00.000").isLeft)
-    assert(TimeConverter.validateInput(s"[PM] -10:00.000").isLeft)
-    assert(TimeConverter.validateInput(s"FOO").isLeft)
+    assert(TimeConverter.validateAndParse(s"90:00").isLeft)
+    assert(TimeConverter.validateAndParse(s"[H3] 90:00.000").isLeft)
+    assert(TimeConverter.validateAndParse(s"[PM] -10:00.000").isLeft)
+    assert(TimeConverter.validateAndParse(s"FOO").isLeft)
   }
 
 }
