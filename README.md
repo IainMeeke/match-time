@@ -28,7 +28,9 @@ To run all the tests run the following command from the project root:
 
     sbt test
 
-Tests can also be run individually. There is a unit test in `com.iain.timeConverter.TimeConverterTest` that tests the entire convert function. To run it run the following from the root of the project:
+Tests can also be run individually. There is a unit test in `com.iain.timeConverter.TimeConverterTest` that tests the entire convert function. You can add cases to this test to check input and output easily.
+To run it run the following from the root of the project:
 
     sbt "testOnly com.iain.timeConverter.TimeConverterTest -- -z Convert"
+    
 
